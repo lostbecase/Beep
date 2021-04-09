@@ -36,7 +36,7 @@ Disassembly of section .text:
   60:	e3520000 	cmp	r2, #0
   64:	1afffff6 	bne	44 <delay+0x18>
   68:	e28bd000 	add	sp, fp, #0
-  6c:	e8bd0800 	pop	{fp}
+  6c:	e8bd0800 	ldmfd	sp!, {fp}
   70:	e12fff1e 	bx	lr
 
 00000074 <main>:
@@ -56,8 +56,24 @@ Disassembly of section .text:
   a8:	e3a00702 	mov	r0, #524288	; 0x80000
   ac:	ebffffde 	bl	2c <delay>
   b0:	eafffff4 	b	88 <main+0x14>
-  b4:	114000a0 	smlaltbne	r0, r0, r0, r0
-  b8:	114000a4 	smlaltbne	r0, r0, r4, r0
+  b4:	114000a0 	smlaltbne	r0, r0, r0, r0	; <UNPREDICTABLE>
+  b8:	114000a4 	smlaltbne	r0, r0, r4, r0	; <UNPREDICTABLE>
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	5328203a 			; <UNDEFINED> instruction: 0x5328203a
+   8:	6372756f 	cmnvs	r2, #465567744	; 0x1bc00000
+   c:	20797265 	rsbscs	r7, r9, r5, ror #4
+  10:	202b2b47 	eorcs	r2, fp, r7, asr #22
+  14:	6574694c 	ldrbvs	r6, [r4, #-2380]!	; 0xfffff6b4
+  18:	30303220 	eorscc	r3, r0, r0, lsr #4
+  1c:	2d337139 	ldfcss	f7, [r3, #-228]!	; 0xffffff1c
+  20:	20293736 	eorcs	r3, r9, r6, lsr r7
+  24:	2e342e34 	mrccs	14, 1, r2, cr4, cr4, {1}
+  28:	Address 0x0000000000000028 is out of bounds.
+
 
 Disassembly of section .ARM.attributes:
 
@@ -66,26 +82,10 @@ Disassembly of section .ARM.attributes:
    4:	61656100 	cmnvs	r5, r0, lsl #2
    8:	01006962 	tsteq	r0, r2, ror #18
    c:	0000001c 	andeq	r0, r0, ip, lsl r0
-  10:	45543505 	ldrbmi	r3, [r4, #-1285]	; 0x505
+  10:	45543505 	ldrbmi	r3, [r4, #-1285]	; 0xfffffafb
   14:	08040600 	stmdaeq	r4, {r9, sl}
   18:	12010901 	andne	r0, r1, #16384	; 0x4000
-  1c:	15011404 	strne	r1, [r1, #-1028]	; 0x404
+  1c:	15011404 	strne	r1, [r1, #-1028]	; 0xfffffbfc
   20:	18031701 	stmdane	r3, {r0, r8, r9, sl, ip}
-  24:	Address 0x00000024 is out of bounds.
-
-
-Disassembly of section .comment:
-
-00000000 <.comment>:
-   0:	43434700 	movtmi	r4, #14080	; 0x3700
-   4:	5328203a 	teqpl	r8, #58	; 0x3a
-   8:	6372756f 	cmnvs	r2, #465567744	; 0x1bc00000
-   c:	20797265 	rsbscs	r7, r9, r5, ror #4
-  10:	202b2b47 	eorcs	r2, fp, r7, asr #22
-  14:	6574694c 	ldrbvs	r6, [r4, #-2380]!	; 0x94c
-  18:	30303220 	eorscc	r3, r0, r0, lsr #4
-  1c:	2d337139 	ldfcss	f7, [r3, #-228]!	; 0xffffff1c
-  20:	20293736 	eorcs	r3, r9, r6, lsr r7
-  24:	2e342e34 	mrccs	14, 1, r2, cr4, cr4, {1}
-  28:	Address 0x00000028 is out of bounds.
+  24:	Address 0x0000000000000024 is out of bounds.
 
